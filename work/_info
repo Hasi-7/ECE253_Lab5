@@ -1,79 +1,111 @@
 m255
 K4
 z2
+!s12c _opt1
+Z0 !s99 nomlopt
+!s12c _opt
+R0
+!s11f MIXED_VERSIONS
 13
 !s112 1.1
 !i10d 8192
 !i10e 25
 !i10f 100
 cModel Technology
-Z0 dD:/Hasnain/Personal/dev/ECE253_Lab5
+Z1 dD:/Hasnain/Personal/dev/ECE253_Lab5
+T_opt
+!s110 1794234187
+VVcP=mdjE?He]Ja:gZfU160
+Z2 04 5 4 work part1 fast 0
+=1-4cd717a15a57-6af1d74b-101-32dc
+R0
+Z3 !s12b OEM100
+Z4 !s124 OEM10U1 
+o-quiet -auto_acc_if_foreign -work work
+Z5 tCvgOpt 0
+n@_opt
+Z6 OL;O;2023.3;77
+R1
+T_opt1
+Z7 !s110 1794234433
+Vm4PXUjAI_GEmKKlM1LYT]2
+R2
+=1-4cd717a15a57-6af1d841-2d4-462c
+R0
+R3
+R4
+o-quiet -auto_acc_if_foreign -work work +acc
+R5
+n@_opt1
+R6
 vdatapath
-Z1 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
-Z2 !s110 1794172511
+Z8 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+Z9 !s110 1794172511
 !i10b 1
 !s100 43]B1mggWa4UXa3CjA3^_2
 IA^[aoC^TEmIACL4mU6eRF3
-Z3 VDg1SIo80bB@j0V0VzS_@n1
-Z4 !s105 part2_sv_unit
+Z10 VDg1SIo80bB@j0V0VzS_@n1
+Z11 !s105 part2_sv_unit
 S1
-R0
-Z5 w1794166643
-Z6 8part2.sv
-Z7 Fpart2.sv
+R1
+Z12 w1794166643
+Z13 8part2.sv
+Z14 Fpart2.sv
 L0 94
-Z8 OV;L;10.5b;63
+Z15 OV;L;10.5b;63
 r1
 !s85 0
 31
-Z9 !s108 1794172511.000000
-Z10 !s107 part2.sv|
-Z11 !s90 -reportprogress|300|part2.sv|
+Z16 !s108 1794172511.000000
+Z17 !s107 part2.sv|
+Z18 !s90 -reportprogress|300|part2.sv|
 !i113 1
-Z12 tCvgOpt 0
+R5
 vpart1
-R1
-!s110 1794172545
+2part1.sv
+DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+R7
 !i10b 1
-!s100 P84TDS5VgnQYi>aH2bW`l1
-I1PhBKUHjlYRQD4`l8LEhI3
-R3
-!s105 part1_sv_unit
+!s100 fOT2Idg2zzZ]m8`?8VoE:0
+Ic_@W00zZWg2M[]^W?3o<S2
 S1
-R0
-w1794166958
+dC:/Users/heryanim/ECE253/ECE253_Lab5
+w1794234079
 8part1.sv
 Fpart1.sv
-L0 1
-R8
+!i122 3
+L0 1 79
+R10
+OL;L;2023.3;77
 r1
 !s85 0
 31
-!s108 1794172545.000000
+!s108 1794234433.000000
 !s107 part1.sv|
 !s90 -reportprogress|300|part1.sv|
-!i113 1
-R12
+!i113 0
+o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R5
 vpart2
-R1
-R2
+R8
+R9
 !i10b 1
 !s100 7IaD@9RBc]Ij3WCKP0bZ@1
 I]z798B9J:Vlh1>zeeKCh02
-R3
-R4
+R10
+R11
 S1
-R0
-R5
-R6
-R7
+R1
+R12
+R13
+R14
 L0 110
-R8
+R15
 r1
 !s85 0
 31
-R9
-R10
-R11
+R16
+R17
+R18
 !i113 1
-R12
+R5

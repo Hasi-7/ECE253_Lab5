@@ -1,11 +1,11 @@
 vlib work 
 vlog part1.sv
-vsim part1
+vsim -voptargs=+acc part1
 
 log {/*}
 add wave {/*}
-radix signal y_Q symbolic
-radix signal Y_D symbolic
+radix signal sim:/part1/y_Q symbolic
+radix signal sim:/part1/Y_D symbolic
 
 #clock signal
 force Clock 0, 1 5ns -r 10ns
