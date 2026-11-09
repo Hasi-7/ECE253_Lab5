@@ -1,6 +1,6 @@
 vlib work 
 vlog part2.sv
-vsim part2
+vsim -voptargs=+acc part2
 
 log {/*}
 #adding individual waves

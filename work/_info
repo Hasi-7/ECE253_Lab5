@@ -1,10 +1,18 @@
 m255
 K4
 z2
-!s12c _opt1
-Z0 !s99 nomlopt
-!s12c _opt
+Z0 !s12c _opt
+Z1 !s99 nomlopt
+Z2 !s12c _opt1
+R1
 R0
+R1
+!s12c _opt2
+R1
+R2
+R1
+R0
+R1
 !s11f MIXED_VERSIONS
 13
 !s112 1.1
@@ -12,71 +20,111 @@ R0
 !i10e 25
 !i10f 100
 cModel Technology
-Z1 dD:/Hasnain/Personal/dev/ECE253_Lab5
+Z3 dD:/Hasnain/Personal/dev/ECE253_Lab5
 T_opt
-!s110 1794234187
-VVcP=mdjE?He]Ja:gZfU160
-Z2 04 5 4 work part1 fast 0
-=1-4cd717a15a57-6af1d74b-101-32dc
-R0
-Z3 !s12b OEM100
-Z4 !s124 OEM10U1 
-o-quiet -auto_acc_if_foreign -work work
-Z5 tCvgOpt 0
+!s110 1794243690
+VS[:g9nHIfYHe8f^U;[US_3
+Z4 04 5 4 work part2 fast 0
+=1-4cd717a15a57-6af1fc6a-b4-2c90
+R1
+Z5 !s12b OEM100
+Z6 !s124 OEM10U3 
+Z7 o-quiet -auto_acc_if_foreign -work work +acc
+Z8 tCvgOpt 0
 n@_opt
-Z6 OL;O;2023.3;77
-R1
+Z9 OL;O;2023.3;77
 T_opt1
-Z7 !s110 1794234433
-Vm4PXUjAI_GEmKKlM1LYT]2
-R2
-=1-4cd717a15a57-6af1d841-2d4-462c
-R0
-R3
+!s110 1794243461
+V69=kIjX3`7zTMNET>`BbU3
 R4
-o-quiet -auto_acc_if_foreign -work work +acc
-R5
-n@_opt1
-R6
-vdatapath
-Z8 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
-Z9 !s110 1794172511
-!i10b 1
-!s100 43]B1mggWa4UXa3CjA3^_2
-IA^[aoC^TEmIACL4mU6eRF3
-Z10 VDg1SIo80bB@j0V0VzS_@n1
-Z11 !s105 part2_sv_unit
-S1
+=1-4cd717a15a57-6af1fb85-6-5264
 R1
-Z12 w1794166643
-Z13 8part2.sv
-Z14 Fpart2.sv
-L0 94
-Z15 OV;L;10.5b;63
+R5
+R6
+R7
+R8
+n@_opt1
+R9
+R3
+T_opt2
+!s110 1794243262
+Vg>n<624kenab5e40595TZ3
+R4
+=1-4cd717a15a57-6af1fabd-269-e88
+R1
+R5
+R6
+o-quiet -auto_acc_if_foreign -work work
+R8
+n@_opt2
+R9
+R3
+vcontrol_path
+Z10 2part2.sv
+Z11 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+Z12 !s110 1794243689
+!i10b 1
+!s100 5P?fV;A8e;BcZzHni4dZ]2
+Io>O26Q>J]JQhO]_GJVS6z0
+S1
+Z13 dC:/Users/heryanim/ECE253/ECE253_Lab5
+Z14 w1794243555
+Z15 8part2.sv
+Z16 Fpart2.sv
+!i122 11
+L0 3 134
+Z17 VDg1SIo80bB@j0V0VzS_@n1
+Z18 OL;L;2023.3;77
 r1
 !s85 0
 31
-Z16 !s108 1794172511.000000
-Z17 !s107 part2.sv|
-Z18 !s90 -reportprogress|300|part2.sv|
-!i113 1
-R5
+Z19 !s108 1794243689.000000
+Z20 !s107 part2.sv|
+Z21 !s90 -reportprogress|300|part2.sv|
+!i113 0
+Z22 o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R8
+vdatapath
+R10
+R11
+R12
+!i10b 1
+!s100 :1g10VBKQC8njMaoUaZG_2
+IddMiTPzZOciVndo[1S[Ab2
+S1
+R13
+R14
+R15
+R16
+!i122 11
+L0 142 61
+R17
+R18
+r1
+!s85 0
+31
+R19
+R20
+R21
+!i113 0
+R22
+R8
 vpart1
 2part1.sv
-DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
-R7
+R11
+!s110 1794234433
 !i10b 1
 !s100 fOT2Idg2zzZ]m8`?8VoE:0
 Ic_@W00zZWg2M[]^W?3o<S2
 S1
-dC:/Users/heryanim/ECE253/ECE253_Lab5
+R13
 w1794234079
 8part1.sv
 Fpart1.sv
 !i122 3
 L0 1 79
-R10
-OL;L;2023.3;77
+R17
+R18
 r1
 !s85 0
 31
@@ -84,28 +132,30 @@ r1
 !s107 part1.sv|
 !s90 -reportprogress|300|part1.sv|
 !i113 0
-o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
-R5
-vpart2
+R22
 R8
-R9
-!i10b 1
-!s100 7IaD@9RBc]Ij3WCKP0bZ@1
-I]z798B9J:Vlh1>zeeKCh02
+vpart2
 R10
 R11
-S1
-R1
 R12
+!i10b 1
+!s100 Q4j?D9=i;=bakBP:z]TBz3
+InW91Tn3c:eD>@NR73N<XB3
+S1
 R13
 R14
-L0 110
 R15
+R16
+!i122 11
+L0 207 46
+R17
+R18
 r1
 !s85 0
 31
-R16
-R17
-R18
-!i113 1
-R5
+R19
+R20
+R21
+!i113 0
+R22
+R8

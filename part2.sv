@@ -52,7 +52,7 @@ statetype current_state, next_state;
 // control FSM state table
 always_comb begin
     case(current_state)
-	C0: next_state = run? C1:C0;
+        C0: next_state = run? C1:C0;
         C1: next_state = done? C0:C2;
         C2: next_state = C3;
         C3: next_state = C0;
@@ -69,10 +69,58 @@ always_comb begin
     done = 1'b0;
 
     case(current_state)
-        C0: // Your code here
-        C1: // Your code here
-        C2: // Your code here
-        C3: // Your code here
+        C0: IRin = 1'b1;
+        C1:
+        begin
+            if (II == mv) begin
+                case (M)
+                    1'b0: begin
+                        case (rY)
+                            1'b0: select = 2'b01;
+                            1'b1: select = 2'b10;
+                        endcase
+                    end
+                    1'b1: select = 2'b11;
+                endcase
+                case (rX)
+                    1'b0: R0in = 1'b1;
+                    1'b1: R1in = 1'b1;
+                endcase
+            end else begin
+                Ain = 1;
+                case(rX)
+                    1'b0: select = 2'b01;
+                    1'b1: select = 2'b10;
+                endcase
+            end
+        end 
+        C2:
+        begin
+            if (II != mv) begin
+                ALUOP = II;
+                case(M)
+                    1'b0: begin
+                        case(rY)
+                            1'b0: select = 2'b01;
+                            1'b1: select = 2'b10;
+                        endcase
+                    end
+                    1'b1: select = 2'b11;
+                endcase
+                Rin = 1'b1;
+            end
+        end
+        C3:
+        begin
+            if (II != mv) begin
+                select = 2'b00;
+                case(rX)
+                    1'b0: R0in = 1'b1;
+                    1'b1: R1in = 1'b1;
+                endcase
+                done = 1'b1;
+            end
+        end
     endcase 
 end
 
@@ -99,8 +147,57 @@ module datapath(
     input logic [1:0] select, ALUOP,
     output logic [15:0] r0, r1, a, r // for testing purposes these are outputs
 );
+parameter mv = 2'b00, add = 2'b01, sub = 2'b10, mult = 2'b11;
+// Internal Wiring
+logic [15:0] ir;
+logic [15:0] MUXout;
+logic [15:0] ALUout;
 
-// Implement your datapath module using the Processor schematic provided in the handout
+always_ff @(posedge clk) begin
+    if(reset)
+    begin
+        ir <= 16'b0;
+        r0 <= 16'b0;
+        r1 <= 16'b0;
+        a <= 16'b0;
+        MUXout <= 16'b0;
+        ALUout <= 16'b0;
+        r <= 16'b0; 
+    end
+    else
+    begin
+        case(IRin)
+            1'b1: ir = INSTRin [11:0];
+            default: ir = 16'b0;
+        endcase
+
+        // Initial Mux:
+        case(select)
+            2'b00: MUXout = r;
+            2'b01: MUXout = r0;
+            2'b10: MUXout = r1;
+            2'b11: MUXout = ir;
+        endcase
+
+        case(Ain)
+            1'b0: 
+            begin
+                if(!(R0in | R1in))
+                    case(ALUOP)
+                        add: ALUout = a + MUXout;
+                        sub: ALUout = a - MUXout;
+                        mult: ALUout = a * MUXout;
+                        default: ALUout = 16'b0;
+                    endcase
+                else if(R0in)
+                    r0 = MUXout;
+                else if(R1in)
+                    r1 = MUXout;
+            end
+            1'b1: a = MUXout;
+        endcase
+    end
+end
 
 endmodule
 
