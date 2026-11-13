@@ -73,6 +73,7 @@ always_comb begin
         C1:
         begin
             if (II == mv) begin
+                done = 1'b1;
                 case (M)
                     1'b0: begin
                         case (rY)
@@ -97,6 +98,7 @@ always_comb begin
         C2:
         begin
             if (II != mv) begin
+                Ain = 1'b0;
                 ALUOP = II;
                 case(M)
                     1'b0: begin
@@ -153,6 +155,28 @@ logic [15:0] ir;
 logic [15:0] MUXout;
 logic [15:0] ALUout;
 
+// Combinational bus multiplexer
+always_comb begin
+    case(select)
+        2'b00: MUXout = r;
+        2'b01: MUXout = r0;
+        2'b10: MUXout = r1;
+        2'b11: MUXout = ir;
+        default: MUXout = 16'b0;
+    endcase
+end
+
+// Combinational ALU
+always_comb begin
+    case(ALUOP)
+        add: ALUout = a + MUXout;
+        sub: ALUout = a - MUXout;
+        mult: ALUout = a * MUXout;
+        default: ALUout = 16'b0;
+    endcase
+end
+
+// Registers hold their values unless their enables are asserted
 always_ff @(posedge clk) begin
     if(reset)
     begin
@@ -160,42 +184,17 @@ always_ff @(posedge clk) begin
         r0 <= 16'b0;
         r1 <= 16'b0;
         a <= 16'b0;
-        MUXout <= 16'b0;
-        ALUout <= 16'b0;
         r <= 16'b0; 
     end
     else
     begin
-        case(IRin)
-            1'b1: ir = INSTRin [11:0];
-            default: ir = 16'b0;
-        endcase
+        if(IRin)
+            ir <= {{4{INSTRin[11]}}, INSTRin[11:0]};
 
-        // Initial Mux:
-        case(select)
-            2'b00: MUXout = r;
-            2'b01: MUXout = r0;
-            2'b10: MUXout = r1;
-            2'b11: MUXout = ir;
-        endcase
-
-        case(Ain)
-            1'b0: 
-            begin
-                if(!(R0in | R1in))
-                    case(ALUOP)
-                        add: ALUout = a + MUXout;
-                        sub: ALUout = a - MUXout;
-                        mult: ALUout = a * MUXout;
-                        default: ALUout = 16'b0;
-                    endcase
-                else if(R0in)
-                    r0 = MUXout;
-                else if(R1in)
-                    r1 = MUXout;
-            end
-            1'b1: a = MUXout;
-        endcase
+        if(R0in) r0 <= MUXout;
+        if(R1in) r1 <= MUXout;
+        if(Ain) a <= MUXout;
+        if(Rin) r <= ALUout;
     end
 end
 

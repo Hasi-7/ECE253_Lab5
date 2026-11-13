@@ -33,6 +33,7 @@ Z7 o-quiet -auto_acc_if_foreign -work work +acc
 Z8 tCvgOpt 0
 n@_opt
 Z9 OL;O;2023.3;77
+R3
 T_opt1
 !s110 1794243461
 V69=kIjX3`7zTMNET>`BbU3
@@ -60,45 +61,42 @@ n@_opt2
 R9
 R3
 vcontrol_path
-Z10 2part2.sv
-Z11 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
-Z12 !s110 1794243689
+Z10 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+Z11 !s110 1794591905
 !i10b 1
-!s100 5P?fV;A8e;BcZzHni4dZ]2
-Io>O26Q>J]JQhO]_GJVS6z0
+!s100 `033mGTjd6c58fFKKG:S]3
+I:j83UU^;=2c6EUDSc3eL22
+Z12 VDg1SIo80bB@j0V0VzS_@n1
+Z13 !s105 part2_sv_unit
 S1
-Z13 dC:/Users/heryanim/ECE253/ECE253_Lab5
-Z14 w1794243555
-Z15 8part2.sv
-Z16 Fpart2.sv
-!i122 11
-L0 3 134
-Z17 VDg1SIo80bB@j0V0VzS_@n1
-Z18 OL;L;2023.3;77
+Z14 dC:/Personal/VSCode/ECE253_Lab5
+Z15 w1794591783
+Z16 8part2.sv
+Z17 Fpart2.sv
+L0 3
+Z18 OV;L;10.5b;63
 r1
 !s85 0
 31
-Z19 !s108 1794243689.000000
+Z19 !s108 1794591905.000000
 Z20 !s107 part2.sv|
 Z21 !s90 -reportprogress|300|part2.sv|
-!i113 0
-Z22 o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+!i113 1
 R8
 vdatapath
 R10
 R11
-R12
 !i10b 1
-!s100 :1g10VBKQC8njMaoUaZG_2
-IddMiTPzZOciVndo[1S[Ab2
-S1
+!s100 KP?PYi6VURQI@T;hYd`4Y3
+ILJ`5G<jBhPc=<0P@HG:9c2
+R12
 R13
+S1
 R14
 R15
 R16
-!i122 11
-L0 142 61
 R17
+L0 144
 R18
 r1
 !s85 0
@@ -106,25 +104,24 @@ r1
 R19
 R20
 R21
-!i113 0
-R22
+!i113 1
 R8
 vpart1
 2part1.sv
-R11
+DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
 !s110 1794234433
 !i10b 1
 !s100 fOT2Idg2zzZ]m8`?8VoE:0
 Ic_@W00zZWg2M[]^W?3o<S2
 S1
-R13
+dC:/Users/heryanim/ECE253/ECE253_Lab5
 w1794234079
 8part1.sv
 Fpart1.sv
 !i122 3
 L0 1 79
-R17
-R18
+R12
+OL;L;2023.3;77
 r1
 !s85 0
 31
@@ -132,23 +129,22 @@ r1
 !s107 part1.sv|
 !s90 -reportprogress|300|part1.sv|
 !i113 0
-R22
+o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
 R8
 vpart2
 R10
 R11
-R12
 !i10b 1
-!s100 Q4j?D9=i;=bakBP:z]TBz3
-InW91Tn3c:eD>@NR73N<XB3
-S1
+!s100 LbH4kDn=LnE<^HGlk0E1l1
+IX[f8:3Qc^`5KUj2n7B3ZV1
+R12
 R13
+S1
 R14
 R15
 R16
-!i122 11
-L0 207 46
 R17
+L0 206
 R18
 r1
 !s85 0
@@ -156,6 +152,5 @@ r1
 R19
 R20
 R21
-!i113 0
-R22
+!i113 1
 R8
