@@ -51,7 +51,7 @@ statetype current_state, next_state;
 
 // control FSM state table
 always_comb begin
-    case(current_state)
+    case(current_stxate)
         C0: next_state = run? C1:C0;
         C1: next_state = done? C0:C2;
         C2: next_state = C3;
