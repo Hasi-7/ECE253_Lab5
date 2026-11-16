@@ -2,16 +2,20 @@ module control_path(
     input logic Clock,
     input logic Reset, 
     input logic Go, 
-    output logic AddIn, SubIn, ShiftIn, MvIn, done
+    output logic AddIn, SubIn, ShiftIn, MvIn, LoadIn, done
 ); 
 
+logic [1:0] iterations;
+
 // control FSM states
-typedef enum logic[1:0]
+typedef enum logic[2:0]
 {
     C0 = 'd0,
     C1 = 'd1, 
-    C2 = 'd2, 
-    C3 = 'd3
+    C2 = 'd2,
+    C3 = 'd3, 
+    C4 = 'd4, 
+    C5 = 'd5
 } statetype;
 
 statetype current_state, next_state;
@@ -20,9 +24,12 @@ statetype current_state, next_state;
 always_comb begin
     case(current_state)
         C0: next_state = Go? C1:C0;
-        C1: next_state = done? C0:C2;
+        C1: next_state = C2;
         C2: next_state = C3;
-        C3: next_state = C0;
+        C3: next_state = C4;
+        C4: next_state = C5;
+        C5: next_state = done ? C0 : C1;
+        default: next_state = C0;
     endcase
 end
 
@@ -34,82 +41,113 @@ always_comb begin
     ShiftIn = 1'b0;
     MvIn = 1'b0;
     done = 1'b0;
+    LoadIn = 1'b0;
 
     case(current_state)
-        C0:
-        begin
-            Go = 1'b1;
-            ShiftIn = 1'b1;
-        end
+        C0: LoadIn = Go;
         C1:
+        begin
+            LoadIn = 1'b0;
+            ShiftIn = 1'b1;
+        end 
+        C2:
         begin
             SubIn = 1'b1;
             ShiftIn = 1'b0;
-        end 
-        C2:
+        end
+        C3:
         begin
             AddIn = 1'b1;
             SubIn = 1'b0;
         end
-        C3:
+        C4:
         begin
             MvIn = 1'b1;
             AddIn = 1'b0;
-            done = 1'b1;
+        end
+        C5:
+        begin
+            done = (iterations == 2'd3);
         end
     endcase 
 end
 
 // control FSM FlipFlop
-always_ff @(posedge clk) begin
-    if(reset)
+always_ff @(posedge Clock) begin
+    if(Reset)
+    begin
+        iterations <= '0;
         current_state <= C0;
+    end
     else
+    begin
        current_state <= next_state;
+
+       if (current_state == C0)
+            iterations <= '0;
+        else if (current_state == C5)
+            iterations <= iterations + 1'b1;
+    end
 end
 endmodule
 
 module datapath(
     input logic Clock, 
     input logic Reset,
-    input logic AddIn, SubIn, MvIn, ShiftIn, done,
+    input logic AddIn, SubIn, MvIn, ShiftIn, done, LoadIn,
     input logic [3:0] Divisor, Dividend,
-    output logic [3:0] Quotient, Remainder
-    output logic []
-);
+    output logic [3:0] Quotient, Remainder,
+    output logic ResultValid);
 
 logic a4;
-logic [7:0] ShiftTemp;
+logic [4:0] RegA;
+logic [3:0] divisor;
+logic [4:0] SubTemp;
+logic [3:0] dividend;
 
-always_comb
-begin
-    if (Divisor == 4'b0) ResultValid = 0;
-    else ResultValid = 1; 
-end
+assign SubTemp = RegA - {1'b0, divisor};
 
-always_ff @(posedge clk) begin
-    if(reset)
-    begin
-        Divisor <= 4'b0;
-        Dividend <= 4'b0;
-        Quotient <= 4'b0;
-        Remainder <= 4'b0;
+always_ff @(posedge Clock) begin
+    if (Reset) begin
+        dividend <= '0;
+        divisor <= '0;
+        Quotient <= '0;
+        Remainder <= '0;
+        RegA <= '0;
+        a4 <= '0;
+        ResultValid <= 1'b0;
     end
-    else
-    begin
-        if(ShiftIn) 
-        begin
-            ShiftTemp <= {Remainder, Dividend} << 1;
-            Remainder <= ShiftTemp[7:4];
-            Dividend <= ShiftTemp[3:0];
+    else begin
+        if (LoadIn) begin
+            dividend <= Dividend;
+            divisor <= Divisor;
+            RegA <= '0;
+            a4 <= '0;
+            ResultValid <= 1'b0;
         end
-        if(SubIn) 
-        begin
-            Remainder = Remainder - Divisor;
-            a4 = Remainder[3];
+
+        if (ShiftIn) begin
+            {RegA, dividend} <= {RegA, dividend} << 1;
         end
-        if(AddIn) Remainder = Remainder + Divisor;
-        if(MvIn) Dividend[0] = a4;
+
+        if (SubIn) begin
+            RegA <= SubTemp;
+            a4 <= SubTemp[4];
+        end
+
+        if (AddIn && a4) begin
+            RegA <= RegA + {1'b0, divisor};
+        end
+
+        if (MvIn) begin
+            dividend[0] <= !a4;
+        end
+
+        if (done) begin
+            Quotient <= dividend;
+            Remainder <= RegA[3:0];
+            ResultValid <= 1'b1;
+        end
     end
 end
 endmodule
@@ -125,33 +163,34 @@ output logic [3:0] Remainder,
 output logic ResultValid
 );
 
-logic AddIn, SubIn, ShiftIn, MvIn, done;
+logic AddIn, SubIn, ShiftIn, MvIn, LoadIn, done;
 
 control_path control(
-   .Clock(Clock)
+   .Clock(Clock),
    .Reset(Reset), 
    .Go(Go), 
    .AddIn(AddIn), 
    .SubIn(SubIn), 
    .ShiftIn(ShiftIn), 
    .MvIn(MvIn), 
-   .done(done)
+   .done(done),
+   .LoadIn(LoadIn)
 );
 
 datapath data(
-    .Clock(Clock)
+    .Clock(Clock),
     .Reset(Reset),
-    .Go(Go),
     .AddIn(AddIn),
     .SubIn(SubIn),
     .ShiftIn(ShiftIn),
     .MvIn(MvIn),
     .done(done),
+    .LoadIn(LoadIn),
     .Divisor(Divisor),
-    .Dividend(Dividend) 
+    .Dividend(Dividend), 
     .Quotient(Quotient),
     .Remainder(Remainder),
-    .r(r_out)
+    .ResultValid(ResultValid)
 );
 
 endmodule
